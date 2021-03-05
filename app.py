@@ -27,3 +27,6 @@ def new_game():
     games[game_id] = game
 
     return {"gameId": "need-real-id", "board": "need-real-board"}
+
+
+# test comment. delete later
