@@ -8,9 +8,9 @@ class WordList:
     def __init__(self, dict_path="dictionary.txt"):
         """Create a word list from a dictionary file on disk.
 
-            >>> wl = WordList("test_dictionary.txt")
-            >>> wl.words == {'CAT', 'DOG'}
-            True
+        >>> wl = WordList("test_dictionary.txt")
+        >>> wl.words == {'CAT', 'DOG'}
+        True
         """
 
         self.words = self._read_dict(dict_path)
@@ -27,7 +27,21 @@ class WordList:
         return words
 
     def check_word(self, word):
-        """Is word in word list?"""
+        """
+        Generate a wordlist from test_dictionary.txt
+            >>> wl = WordList("test_dictionary.txt")
+            >>> wl.words == {'CAT', 'DOG'}
+            True
+
+        Does the word exist in the list?
+            >>> wl.check_word('CAT')
+            True
+            >>> wl.check_word('WORD')
+            False
+
+        # Edge case?
+        # Not likely as the source comes from an external list db of words
+        """
 
         return word in self.words
 

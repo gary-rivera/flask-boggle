@@ -19,14 +19,35 @@ def homepage():
 
 @app.route("/api/new-game")
 def new_game():
-    """Start a new game and return JSON: {game_id, board}."""
+    """Start a new game and return JSON: {gameId, board}."""
 
     # get a unique id for the board we're creating
-    game_id = str(uuid4())
+
+    # generate game id
+    gameId = str(uuid4())
+    # instance of boggle game
     game = BoggleGame()
-    games[game_id] = game
+    # save instance to global set under game id generated
+    games[gameId] = game
 
-    return {"gameId": "need-real-id", "board": "need-real-board"}
+    return jsonify(gameId=gameId, board=game.board)
 
 
-# test comment. delete later
+@app.route("/api/score-word", methods=["POST"])
+def score_word():
+    """ check if word is legal and return JSON response """
+    # use JSON from request
+    word = request.json["word"].upper()
+    gameId = request.json["gameId"]
+
+    # create instance of BoggleGame() with id
+    game = games[gameId]
+
+    # if not a word
+    if not game.is_word_in_word_list(word):
+        return jsonify(result="not_a_word")
+    # if not on board
+    elif not game.check_word_on_board(word):
+        return jsonify(result="not_on_board")
+    # valid word
+    return jsonify(result="word_OK")
